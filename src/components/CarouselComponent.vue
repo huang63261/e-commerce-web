@@ -6,6 +6,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
+// 這 part 之後從資料庫撈圖片
 const imageSrc = ref([
   "https://images.unsplash.com/photo-1610358802969-2b20b64947ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wyMDUzMDJ8MHwxfHNlYXJjaHwyNXx8d2ludGVyJTIwY2xvdGhpbmclMjBtb2RlbHxlbnwxfHx8fDE3MzI2MDYyMTh8MA&ixlib=rb-4.0.3&q=80&w=1080",
   "https://images.unsplash.com/photo-1574784619102-f7e342f21aa0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wyMDUzMDJ8MHwxfHNlYXJjaHwyfHx3aW50ZXIlMjBjbG90aGluZyUyMGNvbGxlY3Rpb258ZW58MXx8fHwxNzMyNjA2MjcyfDA&ixlib=rb-4.0.3&q=80&w=1080"
@@ -53,15 +54,5 @@ const modules = [Autoplay, Pagination, Navigation];
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-/* 似乎沒有生效 */
-.swiper-pagination-bullet {
-  background-color: #e8e8e8 !important;
-  opacity: 1;
-}
-
-.swiper-pagination-bullet-active {
-  background-color: #c2c2c2 !important;
 }
 </style>
