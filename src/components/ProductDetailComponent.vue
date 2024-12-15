@@ -29,7 +29,7 @@
 
       <div class="product-price">
         <strong>$199.9</strong>
-        <span class="availability">Availability: In Stock</span>
+        <span class="availability">Availability: {{ stock }}</span>
       </div>
 
       <!-- 選擇尺寸 -->
@@ -78,6 +78,7 @@ const colors = ["Black", "Brown", "Navy"];
 
 const selectedSize = ref("Small");
 const selectedColor = ref("Black");
+const stock = ref("In Stock");
 
 // 更換主圖片
 const changeMainImage = (image) => {
@@ -141,16 +142,19 @@ const changeMainImage = (image) => {
 }
 
 .product-price {
+  text-align: left;
   font-size: 1.2rem;
   margin-bottom: 10px;
 }
 
 .availability {
-  color: green;
+  margin-left: 2%;
+  color: rgb(0, 0, 0);
   font-size: 0.9rem;
 }
 
 .product-option {
+  text-align: left;
   margin: 10px 0;
 }
 
