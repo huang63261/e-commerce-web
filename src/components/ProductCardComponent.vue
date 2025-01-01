@@ -1,6 +1,6 @@
 <template>
   <div class="product-grid">
-    <div class="product-card" v-for="(product, index) in products" :key="index">
+    <div class="product-card">
       <div class="product-image">
         <img :src="product.image" :alt="product.name" />
       </div>
@@ -9,31 +9,40 @@
           <div class="color-select">
             <div
               class="color"
-              v-for="(color, index) in colors"
+              v-for="(color, index) in product.colors"
               :key="index"
               :style="{ backgroundColor: color }"
             ></div>
           </div>
           <div class="favorite">
             <font-awesome-icon
-              v-if="isSolidHeart"
+              v-if="product.isFavorite"
               :icon="['far', 'heart']"
               class="none-favorite"
-              @click="toggleHeart"
+              @click="toggleFavorite"
             />
             <font-awesome-icon
               v-else
               :icon="['fas', 'heart']"
               class="red-favorite"
-              @click="toggleHeart"
+              @click="toggleFavorite"
             />
           </div>
         </div>
         <p class="category">{{ product.category }}</p>
         <p class="name">{{ product.name }}</p>
         <p class="price">
-          <span class="original-price">${{ product.originalPrice }}</span>
-          <span class="discount-price">${{ product.discountPrice }}</span>
+          <span
+            :class="{
+              'original-price-with-discount': product.discountPrice,
+              'original-price': !product.discountPrice,
+            }"
+          >
+            ${{ product.originalPrice }}
+          </span>
+          <span v-if="product.discountPrice" class="discount-price">
+            ${{ product.discountPrice }}
+          </span>
         </p>
         <div class="ratings">
           <font-awesome-icon :icon="['fas', 'star']" />&nbsp;[{{
@@ -45,26 +54,31 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
-const products = [
-  {
-    name: "The North Face T-shirt",
-    category: "Man's",
-    image:
-      "https://images.unsplash.com/photo-1541955590003-bc7ae84eb4d1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wyMDUzMDJ8MHwxfHNlYXJjaHwxNnx8bWFuJTI3cyUyMGNsb3RoaW5nfGVufDF8fHx8MTczMjYwMTg5MHww&ixlib=rb-4.0.3&q=80&w=1080",
-    originalPrice: 18.99,
-    discountPrice: 14.99,
-    score: 4.3,
-    reviews: 3,
-  },
-];
-let isSolidHeart = ref(true);
-function toggleHeart() {
-  isSolidHeart.value = !isSolidHeart.value;
+<script lang="ts" setup>
+interface Product {
+  id: number;
+  name: string;
+  category: string;
+  colors: string[];
+  image: string;
+  originalPrice: number;
+  discountPrice: number | null | undefined;
+  score: number;
+  reviews: number;
+  isFavorite: boolean;
 }
-const colors = ["#786739", "#030303"];
+
+const props = defineProps<{
+  product: Product;
+}>();
+
+const emit = defineEmits(["favoriteToggle"]);
+
+const toggleFavorite = () => {
+  emit("favoriteToggle", props.product.id, props.product.isFavorite);
+};
 </script>
+
 <style scoped>
 .product-grid {
   display: grid;
@@ -79,8 +93,10 @@ const colors = ["#786739", "#030303"];
   border: 1px solid #ddd;
   overflow: hidden;
   transition: box-shadow 0.3s ease;
+  border-radius: 5px;
   background-size: "cover";
   background-repeat: "no-repeat";
+  background-color: #e8e8e8;
 }
 
 .product-card:hover {
@@ -113,6 +129,12 @@ const colors = ["#786739", "#030303"];
 }
 
 .original-price {
+  color: #000000;
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.original-price-with-discount {
   text-decoration: line-through;
   color: #000000;
   margin-right: 5px;
@@ -163,6 +185,7 @@ const colors = ["#786739", "#030303"];
 
 .category {
   font-size: 10px;
+  color: #000000;
   display: flex;
   justify-content: flex-start;
 }
@@ -170,6 +193,7 @@ const colors = ["#786739", "#030303"];
 .name {
   font-size: 14px;
   font-weight: 500;
+  color: #000000;
   display: flex;
   justify-content: flex-start;
   opacity: 0.7;
@@ -177,6 +201,7 @@ const colors = ["#786739", "#030303"];
 
 .ratings {
   font-size: 10px;
+  color: #000000;
   margin-top: 5px;
   display: flex;
   justify-content: flex-start;
