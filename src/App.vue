@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import Carousel from './components/CarouselComponent.vue'
+import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
@@ -13,7 +12,6 @@ import Carousel from './components/CarouselComponent.vue'
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" />
-  <Carousel>123</Carousel>
 </template>
 
 <style scoped>
