@@ -16,6 +16,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@testing-library/vue": "^8.1.0",
     "@vue/test-utils": "^2.4.6",
+    "axios": "^1.7.9",
     "swiper": "^11.1.15",
     "vue": "^3.5.13"
   },
